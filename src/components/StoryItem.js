@@ -4,8 +4,8 @@ const StoryItem = ({story, key}) => {
 
     return(
         <li>
-            <h3>Author: {story.by}</h3>
-            <h4>Title: {story.title}</h4>
+            <h1><a href={story.url}>{story.title}</a></h1>
+            <p>Posted by {story.by}.</p>
         </li>
     )
 }

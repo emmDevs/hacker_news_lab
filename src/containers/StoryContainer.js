@@ -7,7 +7,7 @@ const StoryContainer = () => {
 
     const [stories, setStories] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    let [filteredText, setFilteredText] = useState("");
+    let [filteredText, setFilteredText] = useState([]);
 
 
     useEffect(() => {
@@ -23,22 +23,29 @@ const StoryContainer = () => {
                 return fetch(`https://hacker-news.firebaseio.com/v0/item/${storyId}.json`)
                 .then(res => res.json())
             })
+
             Promise.all(promises) //brings back an array of whatever you've called
             .then((values) => {
                     setStories(values)
+                    setFilteredText(values)
                 })
                 .then(setLoaded(true))       
         })
-        
     }
-    const getSearchText = (handleTextChange) =>{
-        setFilteredText = handleTextChange;
+
+    const filter = (searchTerm) =>{
+        const lowerSearch = searchTerm.toLowerCase();
+        const filteredText = stories.filter((story) => {
+            return story.title.toLowerCase().indexOf(lowerSearch) > -1
+        });
+        setFilteredText(filteredText);
 }
+
     return(
         <div className="story_container">
             <h1>Top Stories</h1>
-            <StoryFilter  getSearchText={(handleTextChange) => getSearchText(handleTextChange)}></StoryFilter>
-            <StoryList filteredText={filteredText}stories={stories} loaded={loaded}></StoryList>
+            <StoryFilter handleChange={filter}></StoryFilter> 
+            <StoryList stories={filteredText} loaded={loaded}></StoryList>
         </div>
     )
 }

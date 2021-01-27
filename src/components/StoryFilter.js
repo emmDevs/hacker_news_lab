@@ -1,23 +1,33 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-const StoryFilter = ({getSearchText}) =>{
+const StoryFilter = ({handleChange}) =>{
 
-    const [text, setText] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
+    const changeSearchTerm = (event) => {
+        event.preventDefault();
+        setSearchTerm(event.target.value);
+    }
 
-    const handleTextChange = (evt) =>{
-        setText(evt.target.value);
-        getSearchText(text);
+    useEffect(() => {
+        handleChange(searchTerm);
+    }, [searchTerm]);
+
+    const handleSubmit = (event) =>{
+        event.preventDefault();
     }
     
 
 
     return(
-        <form action="">
-            <input type="text" 
+        <form onSubmit={handleSubmit}>
+            <input 
+            onChange={changeSearchTerm}
+            type="text" 
             placeholder="Search" 
-            value={text} 
-            onChange={handleTextChange}/>
+            name="SearchTerm"
+            value={searchTerm} 
+            />
         </form>
     )
 }
