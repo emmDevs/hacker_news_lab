@@ -1,0 +1,10 @@
+.story_container{
+    margin-top: 36px;
+    margin-left: 30%;    
+    width: 45%;
+    border: solid;
+    border-width: 5px;
+    border-color: red;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

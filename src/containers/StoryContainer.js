@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import './StoryContainer.css'
 import StoryList from '../components/StoryList'
+import StoryFilter from '../components/StoryFilter'
 
 const StoryContainer = () => {
 
     const [stories, setStories] = useState([]);
     const [loaded, setLoaded] = useState(false);
+    let [filteredText, setFilteredText] = useState("");
+
 
     useEffect(() => {
         getStories();
     }, [])
-    
+
     const getStories = () =>{
         fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
         .then(res => res.json())
@@ -23,16 +27,18 @@ const StoryContainer = () => {
             .then((values) => {
                     setStories(values)
                 })
-                .then(setLoaded(true))
-        
-                
+                .then(setLoaded(true))       
         })
         
     }
+    const getSearchText = (handleTextChange) =>{
+        setFilteredText = handleTextChange;
+}
     return(
-        <div>
+        <div className="story_container">
             <h1>Top Stories</h1>
-            <StoryList stories={stories} loaded={loaded}></StoryList>
+            <StoryFilter  getSearchText={(handleTextChange) => getSearchText(handleTextChange)}></StoryFilter>
+            <StoryList filteredText={filteredText}stories={stories} loaded={loaded}></StoryList>
         </div>
     )
 }

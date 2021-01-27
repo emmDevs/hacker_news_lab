@@ -1,7 +1,7 @@
 import React from 'react';
 import StoryItem from './StoryItem'
 
-const StoryList = ({ stories, loaded}) =>{
+const StoryList = ({ stories, loaded, filteredText}) =>{
     console.log("before if statement", loaded)
 if(!loaded){
     return <p>Loading...</p>
@@ -13,6 +13,8 @@ const storyArray = stories.map((story) => {
         <StoryItem story={story} key={story.id}></StoryItem>
         )
     })
+
+    
     return(
         <div>
         <ul>
